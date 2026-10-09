@@ -1,0 +1,13 @@
+{
+  "name": "quarto",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.26.0",
+  "scripts": {
+    "dev": "pnpm --filter @quarto/web dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck"
+  }
+}
