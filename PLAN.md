@@ -39,6 +39,19 @@ Quarto/
 - Optional variant (config flag, off by default): 4-in-a-row with all four traits distinct also wins.
 - **Draw:** board full, no line.
 
+## 3D scale / placement config (real-world, meters)
+Scene uses **meters, y-up**. Tinkercad board modeled to scale.
+```
+boardSide    = 0.26 m   # 26 cm full board
+grid         = 4 x 4
+cellSpacing  = 0.065 m  # 6.5 cm center-to-center (= 0.26 / 4)
+pieceWidth   = 0.025 m  # 2.5 cm footprint (side length / diameter)
+pieceShort   = 0.04 m   # 4 cm tall
+pieceTall    = 0.06 m   # 6 cm tall
+boardTopY    = TBD      # board thickness — pieces sit on this; confirm when known
+```
+Assumption: 26 cm = outer board dimension and cells tile it edge to edge. `origin`/`boardTopY`/`pieceScale` stay configurable.
+
 ## Web behavior
 - `gameStore` (zustand) drives phases: `selecting` → `placing` → (win/draw) → next turn.
 - Hover a cell while a piece is held → ghost preview of placement; click to drop with animation.
