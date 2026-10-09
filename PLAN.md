@@ -48,9 +48,10 @@ cellSpacing  = 0.065 m  # 6.5 cm center-to-center (= 0.26 / 4)
 pieceWidth   = 0.025 m  # 2.5 cm footprint (side length / diameter)
 pieceShort   = 0.04 m   # 4 cm tall
 pieceTall    = 0.06 m   # 6 cm tall
-boardTopY    = TBD      # board thickness — pieces sit on this; confirm when known
+boardTopY    = 0.02 m   # 2 cm — board base height; pieces rest on the raised pads here
 ```
 Assumption: 26 cm = outer board dimension and cells tile it edge to edge. `origin`/`boardTopY`/`pieceScale` stay configurable.
+Note: decorative circle-with-holes is cosmetic; pieces sit on raised pads. If pads rise *above* the 2 cm base (top at 4 cm), adjust `boardTopY`.
 
 ## Web behavior
 - `gameStore` (zustand) drives phases: `selecting` → `placing` → (win/draw) → next turn.
