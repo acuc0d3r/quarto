@@ -95,14 +95,14 @@ Bit order LSB→MSB: `bit0=color, bit1=height, bit2=shape, bit3=fill`.
 - Until models exist, render parametric primitives so the whole game is playable.
 
 ## Milestones (commit after each)
-1. Scaffold pnpm workspace + `packages/engine` + `apps/web` (Vite React-TS).
-2. Engine rules + Vitest tests (piece generation, legal moves, win detection incl. diagonals).
-3. Wire `gameStore` to engine; hotseat turn flow.
-4. 3D scene: board grid, placeholder pieces, camera/lighting.
-5. Interaction: piece tray, select → place, hover ghost preview, animations.
-6. Win highlighting + overlay + per-round score.
-7. Rules panel + move history log.
-8. GLB swap-in path + polish (only after user provides models).
+- [x] 1. Scaffold pnpm workspace + `packages/engine` + `apps/web` (Vite React-TS).
+- [x] 2. Engine rules + Vitest tests (piece generation, legal moves, win detection incl. diagonals).
+- [x] 3. Wire `gameStore` to engine; hotseat turn flow (incl. scores, rounds, move log).
+- [x] 4. 3D scene: board grid, placeholder pieces, camera/lighting (real-world scale).
+- [x] 5. Interaction: piece tray, select → place, hover ghost preview, animations.
+- [x] 6. Win highlighting + overlay + per-round score.
+- [x] 7. Rules panel + move history log.
+- [ ] 8. GLB swap-in path + polish (only after user provides models).
 
 ## Conventions
 - Match existing style once files exist; keep engine React-free.
