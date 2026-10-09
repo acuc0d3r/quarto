@@ -104,23 +104,32 @@ describe("findWinningLine", () => {
 });
 
 describe("turn flow", () => {
-  it("flips turn on select and on place", () => {
+  it("alternates select and place between players", () => {
     const start = createGame();
     expect(start.turn).toBe(0);
     expect(start.phase).toBe("selecting");
 
+    // P1 selects, P2 places.
     const selected = selectPiece(start, 0);
     expect(selected.selected).toBe(0);
     expect(selected.phase).toBe("placing");
-    expect(selected.turn).toBe(1); // opponent now places
+    expect(selected.turn).toBe(1);
 
+    // Placer keeps the turn to select the next piece.
     const placed = placePiece(selected, 0);
     expect(placed.board[0]).toBe(0);
     expect(placed.selected).toBeNull();
     expect(placed.phase).toBe("selecting");
-    expect(placed.turn).toBe(0); // back to first player to select
+    expect(placed.turn).toBe(1);
     expect(placed.lastPlacer).toBe(1);
     expect(placed.moveCount).toBe(1);
+
+    // P2 selects, P1 places.
+    const selected2 = selectPiece(placed, 1);
+    expect(selected2.turn).toBe(0);
+    const placed2 = placePiece(selected2, 1);
+    expect(placed2.turn).toBe(0);
+    expect(placed2.lastPlacer).toBe(0);
   });
 
   it("lists legal selects and placements", () => {

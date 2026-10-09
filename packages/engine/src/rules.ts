@@ -86,7 +86,8 @@ export function selectPiece(state: GameState, piece: PieceId): GameState {
 
 /**
  * Active player places the held piece on a cell.
- * Flips `turn` to the next selector; may end the game.
+ * Turn does NOT flip: the placer now selects the next piece to hand over.
+ * May end the game.
  */
 export function placePiece(state: GameState, cell: CellIndex): GameState {
   if (state.phase !== "placing" || state.selected === null) {
@@ -108,7 +109,6 @@ export function placePiece(state: GameState, cell: CellIndex): GameState {
     selected: null,
     lastPlacer: placer,
     moveCount: state.moveCount + 1,
-    turn: (1 - state.turn) as Player,
     phase: "selecting",
   };
 
