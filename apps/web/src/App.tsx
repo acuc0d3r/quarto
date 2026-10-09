@@ -20,6 +20,7 @@ export default function App() {
         <RulesPanel />
       </div>
       <WinOverlay />
+      <p className="controls-hint">drag to rotate · scroll to zoom · right-drag to pan</p>
     </div>
   );
 }

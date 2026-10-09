@@ -273,3 +273,20 @@ body {
 .overlay-card button:hover {
   filter: brightness(1.08);
 }
+
+.controls-hint {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 999px;
+  padding: 5px 14px;
+  z-index: 10;
+  pointer-events: none;
+  white-space: nowrap;
+}

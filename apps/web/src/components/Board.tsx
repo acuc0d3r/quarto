@@ -65,6 +65,7 @@ export function Board() {
             }}
             onClick={(event) => {
               event.stopPropagation();
+              if (event.delta > 5) return;
               if (placing && !occupied) {
                 place(cell);
                 setHover(null);
