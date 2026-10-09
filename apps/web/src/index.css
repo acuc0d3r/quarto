@@ -1,6 +1,11 @@
 :root {
   color-scheme: dark;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --gold: #c8a24a;
+  --panel: rgba(28, 23, 16, 0.82);
+  --panel-border: rgba(200, 162, 74, 0.28);
+  --text: #ece3cf;
+  --muted: #a89b7d;
 }
 
 * {
@@ -14,18 +19,257 @@ body,
   height: 100%;
 }
 
-.app {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
+body {
   background: #14110c;
+  color: var(--text);
 }
 
-.hint {
+.app {
+  position: fixed;
+  inset: 0;
+}
+
+.viewport {
   position: absolute;
-  left: 1rem;
-  bottom: 0.5rem;
+  inset: 0;
+}
+
+.hud {
+  position: absolute;
+  top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 10;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  padding-bottom: 4px;
+}
+
+.hud-left {
+  left: 16px;
+  width: 290px;
+}
+
+.hud-right {
+  right: 16px;
+  width: 270px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  backdrop-filter: blur(6px);
+}
+
+.panel h1 {
   margin: 0;
-  font-size: 0.75rem;
-  color: #a89b7d;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+}
+
+.panel h2 {
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gold);
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin: 4px 0;
+}
+
+.scoreboard-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.scores {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.score {
+  flex: 1;
+  text-align: center;
+  padding: 6px 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 0.85rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.score.active {
+  background: var(--gold);
+  color: #241c0e;
+  font-weight: 600;
+}
+
+.prompt {
+  margin: 10px 0 0;
+  font-size: 0.85rem;
+  min-height: 1.2em;
+}
+
+.tray-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  padding-right: 2px;
+}
+
+.piece-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 0.7rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, opacity 0.15s;
+}
+
+.piece-btn:not(:disabled):hover {
+  border-color: var(--gold);
+  background: rgba(200, 162, 74, 0.15);
+}
+
+.piece-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.piece-btn.selected {
+  border-color: var(--gold);
+  background: rgba(200, 162, 74, 0.28);
+}
+
+.piece-btn.used {
+  opacity: 0.22;
+  text-decoration: line-through;
+}
+
+.swatch {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.piece-btn.light .swatch {
+  background: #e8dcc0;
+}
+
+.piece-btn.dark .swatch {
+  background: #3a2f26;
+}
+
+.piece-btn.round .swatch {
+  border-radius: 50%;
+}
+
+.piece-btn.square .swatch {
+  border-radius: 3px;
+}
+
+.piece-btn.hollow .swatch {
+  box-shadow: inset 0 0 0 4px rgba(0, 0, 0, 0.55);
+}
+
+.piece-text {
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.log ol {
+  margin: 0;
+  padding-left: 18px;
+  max-height: 34vh;
+  overflow-y: auto;
+  font-size: 0.74rem;
+}
+
+.log li {
+  margin-bottom: 3px;
+}
+
+.log-win {
+  margin-left: 6px;
+  color: #5fd07a;
+  font-weight: 600;
+}
+
+.rules summary {
+  cursor: pointer;
+  color: var(--gold);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.rules ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 20;
+}
+
+.overlay-card {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 16px;
+  padding: 28px 36px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+
+.overlay-card h1 {
+  margin: 0 0 8px;
+  color: var(--gold);
+  font-size: 1.6rem;
+}
+
+.overlay-card p {
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+
+.overlay-card button {
+  padding: 9px 20px;
+  border: none;
+  border-radius: 9px;
+  background: var(--gold);
+  color: #241c0e;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.overlay-card button:hover {
+  filter: brightness(1.08);
 }
