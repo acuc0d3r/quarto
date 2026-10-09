@@ -71,10 +71,13 @@ Bit order LSB→MSB: `bit0=color, bit1=height, bit2=shape, bit3=fill`.
 | piece-15 | 1111 | dark  | tall  | square | hollow |
 
 ### File layout & formats
-- **Preferred:** one `apps/web/public/models/board.glb` containing 16 empties named `cell-0`…`cell-15` (row-major, top-left = 0), plus one `apps/web/public/models/pieces.glb` with all 16 nodes named `piece-0`…`piece-15`.
-- Also supported: individual `pieces/piece-N.glb`, or descriptive `piece-light-short-round-solid.glb` (loader accepts both).
-- **GLB/GLTF is the recommended format** (materials, colors, named nodes, hierarchy, animations). **STL loads but is geometry-only** — no colors, names, or empties. OBJ/FBX also supported.
-- Placement is **model-driven**: cells read from `cell-N` empty world transforms; fallback to numeric config (`origin`, `cellSpacing`, `boardTopY`, `pieceScale`). Pieces auto-normalized to a target cell size via bounding box, so modeling units don't matter.
+- **Tinkercad cannot make empties** (no nulls/locators; hole objects are subtracted on export). So the `cell-N` empty approach is **Blender-only**. Tinkercad uses **numeric placement config** instead (`origin`, `cellSpacing`, `boardTopY`, `pieceScale`) — measured off the board.
+- **GLB/GLTF recommended** (materials, colors, hierarchy). **STL loads but is geometry-only** — no colors/names/empties. OBJ/FBX also supported. Tinkercad exports GLTF/GLB/OBJ/STL/FBX.
+- **Trust filenames, not internal node names.** Tinkercad object names may not survive to glTF node names.
+- Preferred: one `board.glb` + per-piece files `pieces/piece-0.glb` … `piece-15.glb`.
+  - Alt: one `pieces.glb` with 16 ungrouped shapes → verify node names/order in gltf.report before relying on it. Loader also accepts descriptive names (`piece-light-short-round-solid.glb`).
+- Model-driven placement when `cell-N` empties exist (Blender); otherwise numeric config tuned to the board.
+- **Scale:** Tinkercad is mm, glTF is meters → imports can be 1000× too big. Pieces auto-normalized to a target cell size via bounding box, so modeling units don't matter.
 - Until models exist, render parametric primitives so the whole game is playable.
 
 ## Milestones (commit after each)
