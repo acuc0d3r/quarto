@@ -46,9 +46,36 @@ Quarto/
 - Move log records `{player, piece, cell, resulting line?}`. Rules panel is a collapsible how-to-play.
 
 ## 3D asset contract (fill later)
-- `apps/web/public/models/board.glb`
-- `apps/web/public/models/pieces/piece-0.glb` … `piece-15.glb` (index = trait bitfield as above).
-- Until present, render parametric primitives so the whole game is playable.
+
+### Piece index → traits
+Bit order LSB→MSB: `bit0=color, bit1=height, bit2=shape, bit3=fill`.
+`index = color + 2*height + 4*shape + 8*fill` (each 0/1). Code reads as `fill shape height color`.
+
+| File/node | Code | Color | Height | Shape | Fill |
+|---|---|---|---|---|---|
+| piece-0  | 0000 | light | short | round  | solid |
+| piece-1  | 0001 | dark  | short | round  | solid |
+| piece-2  | 0010 | light | tall  | round  | solid |
+| piece-3  | 0011 | dark  | tall  | round  | solid |
+| piece-4  | 0100 | light | short | square | solid |
+| piece-5  | 0101 | dark  | short | square | solid |
+| piece-6  | 0110 | light | tall  | square | solid |
+| piece-7  | 0111 | dark  | tall  | square | solid |
+| piece-8  | 1000 | light | short | round  | hollow |
+| piece-9  | 1001 | dark  | short | round  | hollow |
+| piece-10 | 1010 | light | tall  | round  | hollow |
+| piece-11 | 1011 | dark  | tall  | round  | hollow |
+| piece-12 | 1100 | light | short | square | hollow |
+| piece-13 | 1101 | dark  | short | square | hollow |
+| piece-14 | 1110 | light | tall  | square | hollow |
+| piece-15 | 1111 | dark  | tall  | square | hollow |
+
+### File layout & formats
+- **Preferred:** one `apps/web/public/models/board.glb` containing 16 empties named `cell-0`…`cell-15` (row-major, top-left = 0), plus one `apps/web/public/models/pieces.glb` with all 16 nodes named `piece-0`…`piece-15`.
+- Also supported: individual `pieces/piece-N.glb`, or descriptive `piece-light-short-round-solid.glb` (loader accepts both).
+- **GLB/GLTF is the recommended format** (materials, colors, named nodes, hierarchy, animations). **STL loads but is geometry-only** — no colors, names, or empties. OBJ/FBX also supported.
+- Placement is **model-driven**: cells read from `cell-N` empty world transforms; fallback to numeric config (`origin`, `cellSpacing`, `boardTopY`, `pieceScale`). Pieces auto-normalized to a target cell size via bounding box, so modeling units don't matter.
+- Until models exist, render parametric primitives so the whole game is playable.
 
 ## Milestones (commit after each)
 1. Scaffold pnpm workspace + `packages/engine` + `apps/web` (Vite React-TS).
