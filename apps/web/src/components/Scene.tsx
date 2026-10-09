@@ -11,14 +11,16 @@ export function Scene() {
         position={[0.4, 0.8, 0.5]}
         intensity={1.6}
         castShadow
-        shadow-mapSize={[1024, 1024]}
+        shadow-mapSize={[2048, 2048]}
+        shadow-normalBias={0.003}
+        shadow-bias={-0.0001}
       />
       <directionalLight position={[-0.5, 0.4, -0.35]} intensity={0.5} />
       <Board />
       <OrbitControls
         target={[0, 0.02, 0]}
         enableDamping
-        minDistance={0.25}
+        minDistance={0.12}
         maxDistance={1.1}
         maxPolarAngle={Math.PI / 2.05}
       />
